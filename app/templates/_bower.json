@@ -1,6 +1,10 @@
 {
-  "name": "package",
-  "version": "0.0.0",
-  "dependencies": {}
+	"name": "<%= slugifiedAppName %>",
+	"version": "0.0.1",
+	"description": "<%= appDescription %>",
+	"dependencies": {
+		<% if (addSampleContent) { %>
+    		"bootstrap": "~3.0.3"
+		<% } %>
+	}
 }
-
