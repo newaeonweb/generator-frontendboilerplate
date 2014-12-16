@@ -117,7 +117,7 @@ module.exports = function (grunt) {
 				options: {
 					compress: false
 				},
-				src: [config.srcName + '/preprocessor/*.less'],
+				src: [config.srcName + '/less/*.less'],
 				dest: config.dirName + '/css/<%%= pkg.name %>-style.css'
 			}
 		},	
@@ -126,7 +126,7 @@ module.exports = function (grunt) {
     	sass: {
 			dist: {
 				files: [{
-					'assets/css/<%%= pkg.name %>-style.css': 'src/preprocessor/*.scss'
+					'assets/css/<%%= pkg.name %>-style.css': 'src/sass/*.scss'
 				}]
 			}
 		},
@@ -135,7 +135,7 @@ module.exports = function (grunt) {
 		stylus: {
   			compile: {
     			options: {
-    				compress: true,
+    				compress: false,
     				banner: '<%%= banner %>'
     			},
 	    		files: {
@@ -236,28 +236,15 @@ module.exports = function (grunt) {
 	require('load-grunt-tasks')(grunt);
 
 	// Making grunt default to force in order not to break the project if something fail.
-	grunt.option('force', true);
+	grunt.option('force', false);
 
 	// Development task(s).
 	grunt.registerTask('dev', ['concurrent']);
 	
 	// Css task(s).
-	<% if (recess) { %>
-	// Using Less with Grunt-Recess
-    grunt.registerTask('less', ['recess']);
-	<% } %>
-	<% if (gruntSass) { %>
-	// Using Sass with Grunt-sass
-    grunt.registerTask('sass', ['sass']);
-	<% } %>
-	<% if (gruntStylus) { %>
-	// Using Sass with Grunt-contrib-stylus
-    grunt.registerTask('stylus', ['stylus']);
-	<% } %>
-	<% if (css) { %>
-	// Using Sass with Grunt-contrib-cssmin
-    grunt.registerTask('css', ['css']);
-	<% } %>
+	// Using Less with Grunt-Recess or Using Sass with Grunt-sass or Using Sass with Grunt-contrib-stylus or Using Sass with Grunt-contrib-cssmin
+	<% if (recess) { %>grunt.registerTask('less', ['recess']);<% } %><% if (gruntSass) { %>grunt.registerTask('buildsass', ['sass']);<% } %><% if (gruntStylus) { %>grunt.registerTask('buildstylus', ['stylus']);<% } %><% if (css) { %>grunt.registerTask('css', ['cssmin']);<% } %>
+	
 	// Lint task(s).
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 	
@@ -269,10 +256,7 @@ module.exports = function (grunt) {
 		'lint', 
 		'concat', 
 		'uglify',
-		<% if (recess) { %>less<% } %>,
-		<% if (gruntSass) { %>sass<% } %>,
-		<% if (gruntStylus) { %>stylus<% } %>,
-		<% if (css) { %>css<% } %>,
+		<% if (recess) { %>'less',<% } %><% if (gruntSass) { %>'buildsass',<% } %><% if (gruntStylus) { %>'buildstylus',<% } %><% if (css) { %>'cssmin',<% } %>
 		'bower',
 		'injector',
 		'test',
