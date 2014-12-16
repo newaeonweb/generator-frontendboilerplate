@@ -135,7 +135,7 @@ var FbGenerator = yeoman.generators.Base.extend({
 
       if (this.gruntStylus) {
         this.mkdir('src/stylus');
-        this.copy('src/stylus/sample.stylus');
+        this.copy('src/stylus/sample.styl');
       }
 
       if (this.css) {
@@ -156,7 +156,9 @@ var FbGenerator = yeoman.generators.Base.extend({
         this.copy('test/spec/app-test.js');   
 			}
 
-      if (this.addSampleContent) {}
+      if (this.addSampleContent) {
+        this.mkdir('lib');
+      }
 		},
 			
 

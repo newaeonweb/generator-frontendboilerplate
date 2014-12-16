@@ -107,7 +107,8 @@ module.exports = function (grunt) {
 				dest: config.dirName + '/js/<%%= pkg.name %>-scripts.min.js'
 			}
 		},
-		recess: {
+		<% if (recess) { %>
+    	recess: {
 			options: {
 				compile: true,
 				banner: '<%%= banner %>'
@@ -119,14 +120,44 @@ module.exports = function (grunt) {
 				src: [config.srcName + '/preprocessor/*.less'],
 				dest: config.dirName + '/css/<%%= pkg.name %>-style.css'
 			}
-		},
-		sass: {
+		},	
+		<% } %>
+		<% if (gruntSass) { %>
+    	sass: {
 			dist: {
 				files: [{
 					'assets/css/<%%= pkg.name %>-style.css': 'src/preprocessor/*.scss'
 				}]
 			}
-		},		
+		},
+		<% } %>
+		<% if (gruntStylus) { %>
+		stylus: {
+  			compile: {
+    			options: {
+    				compress: true,
+    				banner: '<%%= banner %>'
+    			},
+	    		files: {
+	      			'assets/css/<%%= pkg.name %>-style.css': 'src/stylus/*.styl'
+	      			// compile and concat into single file
+	      			//'path/to/another.css': ['path/to/sources/*.styl', 'path/to/more/*.styl'] 
+	    		}
+  			}
+		},    	
+		<% } %>
+		<% if (css) { %>
+    	cssmin: {
+  			add_banner: {
+    			options: {
+      				banner: '<%%= banner %>'
+    			},
+    			files: {
+      				'assets/css/<%%= pkg.name %>-style.css': ['src/css/*.css']
+    			}
+  			}
+		},	
+		<% } %>				
 		connect: {
 			server: {
 				options: {
@@ -152,11 +183,11 @@ module.exports = function (grunt) {
 					layout: 'byComponent',
 					install: true,
 					verbose: false,
-					cleanTargetDir: true,
+					cleanTargetDir: false,
 					cleanBowerDir: false,
 					bowerOptions: {
 						forceLatest: true,
-    					//production: true
+    					production: true
 					}
 				}
 			}
@@ -211,12 +242,22 @@ module.exports = function (grunt) {
 	grunt.registerTask('dev', ['concurrent']);
 	
 	// Css task(s).
-
-    	grunt.registerTask('less', ['recess']);
-
-	
-	grunt.registerTask('sass', ['sass']);
-
+	<% if (recess) { %>
+	// Using Less with Grunt-Recess
+    grunt.registerTask('less', ['recess']);
+	<% } %>
+	<% if (gruntSass) { %>
+	// Using Sass with Grunt-sass
+    grunt.registerTask('sass', ['sass']);
+	<% } %>
+	<% if (gruntStylus) { %>
+	// Using Sass with Grunt-contrib-stylus
+    grunt.registerTask('stylus', ['stylus']);
+	<% } %>
+	<% if (css) { %>
+	// Using Sass with Grunt-contrib-cssmin
+    grunt.registerTask('css', ['css']);
+	<% } %>
 	// Lint task(s).
 	grunt.registerTask('lint', ['jshint', 'csslint']);
 	
@@ -224,5 +265,17 @@ module.exports = function (grunt) {
 	grunt.registerTask('test', ['mocha']);
 	
 	// Build task(s).
-	grunt.registerTask('build', ['lint', 'concat', 'uglify', 'bower','injector', 'test', 'dev']);
+	grunt.registerTask('build', [
+		'lint', 
+		'concat', 
+		'uglify',
+		<% if (recess) { %>less<% } %>,
+		<% if (gruntSass) { %>sass<% } %>,
+		<% if (gruntStylus) { %>stylus<% } %>,
+		<% if (css) { %>css<% } %>,
+		'bower',
+		'injector',
+		'test',
+		'dev'
+	]);
 };
