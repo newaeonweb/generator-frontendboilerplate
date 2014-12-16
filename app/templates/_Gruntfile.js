@@ -26,8 +26,7 @@ module.exports = function (grunt) {
 			'* <%%= pkg.name %> - v<%%= pkg.version %> - MIT LICENSE <%%= grunt.template.today("yyyy-mm-dd") %>. \n' +
 			'* @author <%%= pkg.author %>\n' +	
 			'*/\n',
-		// Project settings
-		
+		// Project settings		
 		clean: {
 			build: {
 				src: [ config.dirName + '/css/*.css', config.dirName + '/js/*.js']
@@ -131,14 +130,14 @@ module.exports = function (grunt) {
 		},<% } %>
 		<% if (gruntStylus) { %>
 		stylus: {
-			compile: {
+			build: {
 				options: {
 					compress: false,
 					banner: '<%%= banner %>'
 				},
 				files: {
 					'assets/css/<%%= pkg.name %>-style.css': 'src/stylus/*.styl'
-					// compile and concat into single file
+					// to compile and concat into single file, using inside the array
 					//'path/to/another.css': ['path/to/sources/*.styl', 'path/to/more/*.styl'] 
 				}
 			}

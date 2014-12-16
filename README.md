@@ -1,6 +1,6 @@
 # Generator-Frontendboilerplate [![Build Status](https://secure.travis-ci.org/newaeonweb/generator-frontendboilerplate.png?branch=master)](https://travis-ci.org/newaeonweb/generator-frontendboilerplate)
 
-> [Yeoman](http://yeoman.io) generator
+> [Yeoman](http://yeoman.io) generator for [FrontendBoilerplate](http://www.frontendboilerplate.com).
 
 
 ## Getting Started
@@ -8,8 +8,6 @@
 ### What is Yeoman?
 
 Trick question. It's not a thing. It's this guy:
-
-![](http://i.imgur.com/JHaAlBJ.png)
 
 Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
 
@@ -34,13 +32,6 @@ Finally, initiate the generator:
 ```bash
 yo frontendboilerplate
 ```
-
-### Getting To Know Yeoman
-
-Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
-
-If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
-
 
 ## License
 
