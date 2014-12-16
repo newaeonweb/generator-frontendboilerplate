@@ -6,11 +6,11 @@ var Apple = function (opts) {
 	
 	'use strict';
 	
-    opts = opts || {};
+	opts = opts || {};
 
-    this.name = opts.name || 'Fuji';
+	this.name = opts.name || 'Fuji';
 
-    this.sound = opts.sound || 'crunch';
+	this.sound = opts.sound || 'crunch';
 
-    return this;
+	return this;
 };

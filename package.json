@@ -1,7 +1,7 @@
 {
-  "name": "generator-fb",
-  "version": "0.0.0",
-  "description": "Yeoman generator",
+  "name": "generator-frontendboilerplate",
+  "version": "0.0.1",
+  "description": "Frontend Boilerplate Yeoman generator to scaffold web applications",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "newaeonweb/generator-frontendboilerplate",

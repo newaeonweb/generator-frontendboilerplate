@@ -25,7 +25,7 @@ var FbGenerator = yeoman.generators.Base.extend({
     }, {
       name: 'appDescription',
       message: 'How would you describe your application?',
-      default: 'A simple Frontend Boilerplate to start a web project from the scratch'
+      default: 'Frontend Boilerplate Yeoman generator to scaffold web applications'
     }, {
       name: 'appKeywords',
       message: 'How would you describe your application in comma seperated key words?',
@@ -37,13 +37,13 @@ var FbGenerator = yeoman.generators.Base.extend({
     }, {
       type: 'confirm',
       name: 'addTestsFolder',
-      message: 'Would you like to add test folder? We using Mocha',
+      message: 'Would you like to add test folder? (We using Mocha)',
       default: true
     }, {
       type: 'confirm',
       name: 'addSampleContent',
-      message: 'Would you like to add sample bower content?',
-      default: false
+      message: 'Would you like to add sample bower content? (We using Bootstrap 3)',
+      default: true
     }];
 
     this.prompt(prompts, function(props) {
@@ -107,13 +107,13 @@ var FbGenerator = yeoman.generators.Base.extend({
 
       this.template('test/_test.html', 'test/test.html')      
     },
-	  
-		appFolders: function () {
-			this.mkdir('assets/css');
-			this.mkdir('assets/fonts');
-			this.mkdir('assets/images');
-			this.mkdir('assets/js');
-			this.mkdir('lib');
+    
+    appFolders: function () {
+      this.mkdir('assets/css');
+      this.mkdir('assets/fonts');
+      this.mkdir('assets/images');
+      this.mkdir('assets/js');
+      this.mkdir('lib');
       this.mkdir('src/scripts');
       this.mkdir('src/vendor');
 
@@ -122,16 +122,16 @@ var FbGenerator = yeoman.generators.Base.extend({
       //this.copy('assets/js/frontendboilerplate-scripts.min.js');
       this.copy('src/scripts/sample1.js'); 
       this.copy('src/scripts/sample2.js');
-		
-			if (this.recess) {
-				this.mkdir('src/less');
+    
+      if (this.recess) {
+        this.mkdir('src/less');
         this.copy('src/less/sample.less');
-			}
-		
-			if (this.gruntSass) {
-				this.mkdir('src/sass');
+      }
+    
+      if (this.gruntSass) {
+        this.mkdir('src/sass');
         this.copy('src/sass/sample.scss');
-			}
+      }
 
       if (this.gruntStylus) {
         this.mkdir('src/stylus');
@@ -142,25 +142,25 @@ var FbGenerator = yeoman.generators.Base.extend({
         this.mkdir('src/css');
         this.copy('src/css/sample.css');
       }
-			
-			if (this.addTestsFolder) {
-				this.mkdir('test/mocha');
-				this.mkdir('test/mocha/css');
-				this.mkdir('test/mocha/js');
-				this.mkdir('test/spec');
+      
+      if (this.addTestsFolder) {
+        this.mkdir('test/mocha');
+        this.mkdir('test/mocha/css');
+        this.mkdir('test/mocha/js');
+        this.mkdir('test/spec');
 
         //this.copy('test/test.html');
         this.copy('test/mocha/css/mocha.css');
         this.copy('test/mocha/js/mocha.js'); 
         this.copy('test/mocha/js/chai.js');
         this.copy('test/spec/app-test.js');   
-			}
+      }
 
       if (this.addSampleContent) {
         this.mkdir('lib');
       }
-		},
-			
+    },
+      
 
     // Add dot files and Gruntfile.js
     projectfiles: function () {

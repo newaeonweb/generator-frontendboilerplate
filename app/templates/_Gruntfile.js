@@ -30,8 +30,8 @@ module.exports = function (grunt) {
 		
 		clean: {
 			build: {
-    			src: [ config.dirName + '/css/*.css', config.dirName + '/js/*.js']
-  			},
+				src: [ config.dirName + '/css/*.css', config.dirName + '/js/*.js']
+			},
 			// use this task to run before start coding
 			//reset: {
 			//	src: [config.srcName + 'preprocessor', config.srcName + 'scripts', 'lib']
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
 			},
 			clientPreprocessor: {
 				files: watchFiles.clientPreprocessor,
-				tasks: ['less', 'sass'],
+				tasks: [<% if (recess) { %>'less'<% } %><% if (gruntSass) { %>'buildsass'<% } %><% if (gruntStylus) { %>'buildstylus'<% } %><% if (css) { %>'cssmin'<% } %>],
 				options: {
 					livereload: true
 				}
@@ -108,7 +108,7 @@ module.exports = function (grunt) {
 			}
 		},
 		<% if (recess) { %>
-    	recess: {
+		recess: {
 			options: {
 				compile: true,
 				banner: '<%%= banner %>'
@@ -120,44 +120,40 @@ module.exports = function (grunt) {
 				src: [config.srcName + '/less/*.less'],
 				dest: config.dirName + '/css/<%%= pkg.name %>-style.css'
 			}
-		},	
-		<% } %>
+		},<% } %>
 		<% if (gruntSass) { %>
-    	sass: {
+		sass: {
 			dist: {
 				files: [{
 					'assets/css/<%%= pkg.name %>-style.css': 'src/sass/*.scss'
 				}]
 			}
-		},
-		<% } %>
+		},<% } %>
 		<% if (gruntStylus) { %>
 		stylus: {
-  			compile: {
-    			options: {
-    				compress: false,
-    				banner: '<%%= banner %>'
-    			},
-	    		files: {
-	      			'assets/css/<%%= pkg.name %>-style.css': 'src/stylus/*.styl'
-	      			// compile and concat into single file
-	      			//'path/to/another.css': ['path/to/sources/*.styl', 'path/to/more/*.styl'] 
-	    		}
-  			}
-		},    	
-		<% } %>
+			compile: {
+				options: {
+					compress: false,
+					banner: '<%%= banner %>'
+				},
+				files: {
+					'assets/css/<%%= pkg.name %>-style.css': 'src/stylus/*.styl'
+					// compile and concat into single file
+					//'path/to/another.css': ['path/to/sources/*.styl', 'path/to/more/*.styl'] 
+				}
+			}
+		},<% } %>
 		<% if (css) { %>
-    	cssmin: {
-  			add_banner: {
-    			options: {
-      				banner: '<%%= banner %>'
-    			},
-    			files: {
-      				'assets/css/<%%= pkg.name %>-style.css': ['src/css/*.css']
-    			}
-  			}
-		},	
-		<% } %>				
+		cssmin: {
+			add_banner: {
+				options: {
+					banner: '<%%= banner %>'
+				},
+				files: {
+					'assets/css/<%%= pkg.name %>-style.css': ['src/css/*.css']
+				}
+			}
+		},<% } %>				
 		connect: {
 			server: {
 				options: {
@@ -187,7 +183,7 @@ module.exports = function (grunt) {
 					cleanBowerDir: false,
 					bowerOptions: {
 						forceLatest: true,
-    					production: true
+						production: true
 					}
 				}
 			}
@@ -198,17 +194,17 @@ module.exports = function (grunt) {
 				addRootSlash: false,
 				relative: true
 			},
-// Uncomment to use with others files.
-//			local_dependencies: {
-//      			files: {
-//        			'index.html': ['js/*.js', 'css/*.css'],
-//      			}
-//    		},
+			// Uncomment to use with others files.
+			//local_dependencies: {
+				//files: {
+					//'index.html': ['js/*.js', 'css/*.css'],
+				//}
+			//},
 			bower_dependencies: {
 				files: {
-        			'index.html': ['bower.json'],
-      			}
-    		}
+					'index.html': ['bower.json'],
+				}
+			}
 		},
 		mocha: {
 			test: {

@@ -3,3 +3,4 @@ node_modules
 .idea/*
 .sass-cache
 src/bower_components
+lib/

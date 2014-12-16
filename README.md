@@ -1,4 +1,4 @@
-# generator-frontendboilerplate [![Build Status](https://secure.travis-ci.org/newaeonweb/generator-frontendboilerplate.png?branch=master)](https://travis-ci.org/newaeonweb/generator-frontendboilerplate)
+# Generator-Frontendboilerplate [![Build Status](https://secure.travis-ci.org/newaeonweb/generator-frontendboilerplate.png?branch=master)](https://travis-ci.org/newaeonweb/generator-frontendboilerplate)
 
 > [Yeoman](http://yeoman.io) generator
 
