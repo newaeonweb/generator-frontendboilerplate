@@ -19,6 +19,9 @@ module.exports = function (grunt) {
 		mochaTests: [config.dirName + '/test/unit/*.js'],
 		concatBase: [config.srcName + '/scripts/*js', 'src/vendor/*js' ]
 	};
+	// Ask for jshint reporter
+	var jshintReporter = require('jshint-stylish');
+	
 	// Define the configuration for all the tasks
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -73,7 +76,7 @@ module.exports = function (grunt) {
 				src: watchFiles.clientJS.concat(watchFiles.clientSrc),
 				options: {
 					jshintrc: '.jshintrc',
-					reporter: require('jshint-stylish'),
+					reporter: jshintReporter,
 					ignores: ['assets/js/*.min.js']
 				}
 			}
@@ -231,7 +234,7 @@ module.exports = function (grunt) {
 	require('load-grunt-tasks')(grunt);
 
 	// Making grunt default to force in order not to break the project if something fail.
-	grunt.option('force', false);
+	grunt.option('force', true);
 
 	// Development task(s).
 	grunt.registerTask('dev', ['concurrent']);

@@ -29,10 +29,10 @@
     "underscore.inflections": "~0.2.1"
   },
   "devDependencies": {
-    "mocha": "*",
     "assert": "~1.1.1",
     "async": "~0.9.0",
     "fs-extra": "~0.10.0",
+    "mocha": "*",
     "temp": "~0.8.0"
   },
   "peerDependencies": {
