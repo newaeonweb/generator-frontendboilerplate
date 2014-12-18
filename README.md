@@ -27,10 +27,16 @@ To install generator-frontendboilerplate from npm, run:
 npm install -g generator-frontendboilerplate
 ```
 
-Finally, initiate the generator:
+Initiate the generator:
 
 ```bash
 yo frontendboilerplate
+```
+
+Finally run:
+
+```bash
+grunt build
 ```
 
 ## License

@@ -1,6 +1,6 @@
 {
   "name": "generator-frontendboilerplate",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Frontend Boilerplate Yeoman generator to scaffold web applications",
   "license": "MIT",
   "main": "app/index.js",

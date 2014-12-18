@@ -196,16 +196,12 @@ var FbGenerator = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    var done = this.async();
 
     this.installDependencies({
       skipInstall: this.options['skip-install'],
       bower: false
     });
 
-    done();
-    
-    this.spawnCommand('grunt', ['build']);
   }
 });
 
