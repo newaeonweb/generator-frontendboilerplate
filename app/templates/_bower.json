@@ -4,7 +4,7 @@
 	"description": "<%= appDescription %>",
 	"dependencies": {
 		<% if (addSampleContent) { %>
-			"bootstrap": "latest"
+			"bootstrap": "3.3.1"
 		<% } %>
 	}
 }

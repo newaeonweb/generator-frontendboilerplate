@@ -42,7 +42,7 @@ var FbGenerator = yeoman.generators.Base.extend({
     }, {
       type: 'confirm',
       name: 'addTestsFolder',
-      message: 'Would you like to add test folder? (We using Mocha)',
+      message: 'Would you like to add test folder? (We are using Mocha)',
       default: true
     }, {
       type: 'confirm',
@@ -127,7 +127,7 @@ var FbGenerator = yeoman.generators.Base.extend({
       }
 
       if (this.addSampleContent) {
-        mkdirp('assets/js/lib');
+        mkdirp('assets/lib');
       }
 
       done();
@@ -198,7 +198,7 @@ var FbGenerator = yeoman.generators.Base.extend({
 
     this.installDependencies({
       skipInstall: this.options['skip-install'],
-      bower: false
+      bower: true
     });
 
   }

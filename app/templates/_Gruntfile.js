@@ -175,24 +175,9 @@ module.exports = function (grunt) {
 				logConcurrentOutput: true
 			}
 		},
-		bower: {
-			install: {
-				options: {
-					layout: 'byComponent',
-					install: true,
-					verbose: false,
-					cleanTargetDir: false,
-					cleanBowerDir: false,
-					bowerOptions: {
-						forceLatest: true,
-						production: true
-					}
-				}
-			}
-		},
 		injector: {
 			options: {
-				min: false,
+				min: true,
 				addRootSlash: false,
 				relative: true
 			},
@@ -240,7 +225,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('dev', ['concurrent']);
 	
 	// Css task(s).
-	// Using Less with Grunt-Recess or Using Sass with Grunt-sass or Using Sass with Grunt-contrib-stylus or Using Sass with Grunt-contrib-cssmin
+	// Using Less with Grunt-Recess or Using Sass with Grunt-sass or Using Stylus with Grunt-contrib-stylus or Using CSS with Grunt-contrib-cssmin
 	<% if (recess) { %>grunt.registerTask('less', ['recess']);<% } %><% if (gruntSass) { %>grunt.registerTask('buildsass', ['sass']);<% } %><% if (gruntStylus) { %>grunt.registerTask('buildstylus', ['stylus']);<% } %><% if (css) { %>grunt.registerTask('css', ['cssmin']);<% } %>
 	
 	// Lint task(s).
@@ -255,7 +240,6 @@ module.exports = function (grunt) {
 		'concat', 
 		'uglify',
 		<% if (recess) { %>'less',<% } %><% if (gruntSass) { %>'buildsass',<% } %><% if (gruntStylus) { %>'buildstylus',<% } %><% if (css) { %>'cssmin',<% } %>
-		'bower',
 		'injector',
 		'test',
 		'dev'
