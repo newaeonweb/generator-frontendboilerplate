@@ -4,10 +4,15 @@ var yeoman = require('yeoman-generator');
 var path = require('path');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var slugify = require("underscore.string/slugify");
+var _ = require('underscore');
+_.mixin(require('underscore.inflections'));
+var mkdirp = require('mkdirp');
+
 
 var FbGenerator = yeoman.generators.Base.extend({
   initializing: function () {
-    this.pkg = yeoman.file.readJSON(path.join(__dirname, '../package.json'));
+    this.pkg = require('../package.json');
   },
 
   appDetails: function () {
@@ -42,7 +47,7 @@ var FbGenerator = yeoman.generators.Base.extend({
     }, {
       type: 'confirm',
       name: 'addSampleContent',
-      message: 'Would you like to add sample bower content? (We using Bootstrap 3)',
+      message: 'Would you like to add sample bower content? (We are using Bootstrap 3)',
       default: true
     }];
 
@@ -54,9 +59,9 @@ var FbGenerator = yeoman.generators.Base.extend({
       this.addTestsFolder = props.addTestsFolder;
       this.addSampleContent = props.addSampleContent;
 
-      this.slugifiedAppName = this._.slugify(this.appName);
-      this.humanizedAppName = this._.humanize(this.appName);
-      this.capitalizedAppAuthor = this._.capitalize(this.appAuthor);
+      this.slugifiedAppName = slugify(this.appName);
+      this.humanizedAppName = _.titleize(this.appName);
+      this.capitalizedAppAuthor = _.camelize(this.appAuthor);
 
       done();
     }.bind(this));
@@ -66,33 +71,64 @@ var FbGenerator = yeoman.generators.Base.extend({
     var done = this.async();
 
     var prompts = [{
-      type: 'checkbox',
-      name: 'modules',
+      type: 'list',
+      name: 'stylesheet',
+      default: 0,
       message: 'Which Preprocessor would you like to include?',
-        choices: [{
-          value: 'recess',
-          name: 'less',
-          checked: false
-        }, {
-          value: 'gruntSass',
-          name: 'sass',
-          checked: false
-        }, {
-          value: 'gruntStylus',
-          name: 'stylus',
-          checked: false
-        }, {
-          value: 'css',
-          name: 'css',
-          checked: false
-        }]
+      choices: [ "CSS", "Sass", "Stylus", "Less"]
+
     }];
 
-    this.prompt(prompts, function (props) {
-      this.recess = this._.contains(props.modules, 'recess');
-      this.gruntSass = this._.contains(props.modules, 'gruntSass');
-      this.gruntStylus = this._.contains(props.modules, 'gruntStylus');
-      this.css = this._.contains(props.modules, 'css');
+    this.prompt(prompts, function(props) {
+    
+      if (props.stylesheet === 'CSS') {
+            this.css = true;
+            mkdirp('src/css');
+            this.copy('src/css/sample.css');
+      } else {
+            this.css = false;
+      }
+
+      if (props.stylesheet === 'Less') {
+          this.recess = true;
+          mkdirp('src/less');
+          this.copy('src/less/sample.less');
+      } else {
+            this.recess = false;
+      }
+
+      if (props.stylesheet === 'Sass') {
+          this.gruntSass = true;
+          mkdirp('src/sass');
+          this.copy('src/sass/sample.scss');
+      } else {
+            this.gruntSass = false;
+      }
+
+      if (props.stylesheet === 'Stylus') {
+          this.gruntStylus = true;
+          mkdirp('src/stylus');
+          this.copy('src/stylus/sample.styl');
+      } else {
+            this.gruntStylus = false;
+      }
+      
+      if (this.addTestsFolder) {
+        mkdirp('test/mocha');
+        mkdirp('test/mocha/css');
+        mkdirp('test/mocha/js');
+        mkdirp('test/spec');
+
+        //this.copy('test/test.html');
+        this.copy('test/mocha/css/mocha.css');
+        this.copy('test/mocha/js/mocha.js'); 
+        this.copy('test/mocha/js/chai.js');
+        this.copy('test/spec/app-test.js');   
+      }
+
+      if (this.addSampleContent) {
+        mkdirp('assets/js/lib');
+      }
 
       done();
     }.bind(this));
@@ -109,13 +145,11 @@ var FbGenerator = yeoman.generators.Base.extend({
     },
     
     appFolders: function () {
-      this.mkdir('assets/css');
-      this.mkdir('assets/fonts');
-      this.mkdir('assets/images');
-      this.mkdir('assets/js');
-      this.mkdir('lib');
-      this.mkdir('src/scripts');
-      this.mkdir('src/vendor');
+      mkdirp('assets/css');
+      mkdirp('assets/fonts');
+      mkdirp('assets/images');
+      mkdirp('assets/js');
+      mkdirp('src/scripts');
 
       //this.copy('assets/css/frontendboilerplate-style.css'); 
       //this.copy('assets/js/frontendboilerplate-scripts.js');
@@ -123,42 +157,7 @@ var FbGenerator = yeoman.generators.Base.extend({
       this.copy('src/scripts/sample1.js'); 
       this.copy('src/scripts/sample2.js');
     
-      if (this.recess) {
-        this.mkdir('src/less');
-        this.copy('src/less/sample.less');
-      }
-    
-      if (this.gruntSass) {
-        this.mkdir('src/sass');
-        this.copy('src/sass/sample.scss');
-      }
-
-      if (this.gruntStylus) {
-        this.mkdir('src/stylus');
-        this.copy('src/stylus/sample.styl');
-      }
-
-      if (this.css) {
-        this.mkdir('src/css');
-        this.copy('src/css/sample.css');
-      }
       
-      if (this.addTestsFolder) {
-        this.mkdir('test/mocha');
-        this.mkdir('test/mocha/css');
-        this.mkdir('test/mocha/js');
-        this.mkdir('test/spec');
-
-        //this.copy('test/test.html');
-        this.copy('test/mocha/css/mocha.css');
-        this.copy('test/mocha/js/mocha.js'); 
-        this.copy('test/mocha/js/chai.js');
-        this.copy('test/spec/app-test.js');   
-      }
-
-      if (this.addSampleContent) {
-        this.mkdir('lib');
-      }
     },
       
 
